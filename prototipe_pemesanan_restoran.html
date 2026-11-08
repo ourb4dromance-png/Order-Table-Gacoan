@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#b5121b">
+<title>Gacoan — Pesan dari Meja</title>
+<style>
+:root{--red:#b5121b;--red2:#e3262e;--ink:#191919;--muted:#777;--cream:#fffaf3;--line:#eee4dc;--green:#16834b}
+*{box-sizing:border-box}body{margin:0;background:#f5f3f0;color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input{font:inherit}button{cursor:pointer}.app{max-width:1120px;margin:auto;min-height:100vh;background:#fff;box-shadow:0 0 35px #0000000b}
+.topbar{background:var(--red);color:#fff;padding:17px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.4px}.brand-mark{width:38px;height:38px;border-radius:12px;background:#fff;color:var(--red);display:grid;place-items:center;font-weight:1000;font-size:20px}.brand small{display:block;font-size:10px;letter-spacing:1.7px;opacity:.8}
+.table-pill{font-size:12px;background:#ffffff20;border:1px solid #ffffff55;border-radius:30px;padding:8px 12px}
+main{padding:24px 22px 110px}.hero{background:linear-gradient(115deg,#831018,#c51b24 65%,#ef4a36);color:#fff;border-radius:20px;padding:25px;display:flex;justify-content:space-between;align-items:center;gap:20px;overflow:hidden}
+.hero h1{font-size:clamp(25px,5vw,40px);line-height:1.05;margin:0 0 10px}.hero p{margin:0;color:#ffe4df;font-size:14px}.hero-stamp{font-size:60px;transform:rotate(-12deg);filter:drop-shadow(0 8px 8px #4b000055)}
+.section-head{display:flex;align-items:end;justify-content:space-between;margin:27px 0 14px;gap:12px}.section-head h2{margin:0;font-size:21px}.section-head p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.search{width:100%;border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin:18px 0 12px;outline:none}.search:focus{border-color:var(--red)}
+.categories{display:flex;gap:8px;overflow:auto;padding:3px 0 12px}.cat{border:1px solid var(--line);background:#fff;border-radius:30px;padding:9px 15px;white-space:nowrap;font-size:13px}.cat.active{background:var(--red);border-color:var(--red);color:#fff}
+.menu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.food{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff;display:flex;flex-direction:column}.food-art{height:140px;display:grid;place-items:center;font-size:66px;background:linear-gradient(135deg,#fff0e6,#ffe0d2)}.food:nth-child(3n+2) .food-art{background:linear-gradient(135deg,#fff4ce,#ffe5a1)}.food:nth-child(3n) .food-art{background:linear-gradient(135deg,#fce5e5,#f5c8c8)}.food-info{padding:13px;display:flex;flex-direction:column;flex:1}.food h3{font-size:15px;margin:0 0 5px}.food p{font-size:12px;color:var(--muted);margin:0 0 12px;line-height:1.4;min-height:34px}.food-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:auto;gap:8px}.price{font-weight:800;font-size:14px}.add{background:var(--red);color:#fff;border:0;border-radius:9px;padding:8px 12px;font-weight:700}
+.bottom-cart{position:fixed;bottom:0;left:0;right:0;background:#ffffffed;backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:12px 18px;z-index:6}.bottom-inner{max-width:1076px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:15px}.cart-meta strong{display:block;font-size:14px}.cart-meta span{font-size:12px;color:var(--muted)}.primary{border:0;background:var(--red);color:#fff;border-radius:12px;padding:13px 19px;font-weight:800}.primary:disabled{opacity:.45;cursor:not-allowed}
+.overlay{position:fixed;inset:0;background:#0008;z-index:10;display:none;align-items:flex-end;justify-content:center}.overlay.show{display:flex}.sheet{background:#fff;width:min(100%,650px);max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:23px 22px 28px;animation:up .2s ease}@keyframes up{from{transform:translateY(30px);opacity:.5}to{transform:none;opacity:1}}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.sheet-head h2{margin:0;font-size:21px}.close{border:0;background:#f2f2f2;border-radius:50%;width:34px;height:34px;font-size:20px}
+.cart-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.cart-emoji{font-size:30px;width:45px;height:45px;display:grid;place-items:center;background:#fff0e8;border-radius:10px}.cart-row-info{flex:1}.cart-row-info strong{display:block;font-size:14px}.cart-row-info small{color:var(--muted)}.qty{display:flex;align-items:center;gap:9px}.qty button{border:1px solid var(--line);background:#fff;border-radius:8px;width:28px;height:28px}
+.total-line{display:flex;justify-content:space-between;margin:17px 0 5px;font-size:14px}.grand{font-weight:900;font-size:18px;border-top:1px dashed var(--line);padding-top:14px}
+.field{margin:14px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.field input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;outline:none}.field input:focus{border-color:var(--red)}
+.note{font-size:12px;color:var(--muted);line-height:1.5}.checkout-items{background:#faf7f4;padding:12px;border-radius:12px;font-size:13px;line-height:1.8}
+.payment-option{border:1px solid var(--line);border-radius:13px;padding:14px;display:flex;align-items:center;gap:12px;margin:10px 0}.payment-option.selected{border-color:var(--red);background:#fff8f7}.payment-option input{accent-color:var(--red)}.payment-option strong{font-size:14px;display:block}.payment-option small{color:var(--muted)}
+.qr-wrap{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;text-align:center;max-width:300px;margin:16px auto}.qr-fake{width:180px;height:180px;margin:12px auto;background-color:#fff;background-image:repeating-conic-gradient(#171717 0% 25%,#fff 0% 50%);background-size:18px 18px;position:relative;border:8px solid white;outline:1px solid #ddd}.qr-fake:after{content:"DEMO";position:absolute;inset:65px 48px;background:#fff;display:grid;place-items:center;font-size:18px;font-weight:1000;letter-spacing:2px}
+.success{text-align:center;padding:20px 5px}.success-icon{width:74px;height:74px;border-radius:50%;background:#e5f6ec;color:var(--green);display:grid;place-items:center;font-size:38px;margin:0 auto 15px}.success h2{margin:0 0 8px}.success p{color:var(--muted);font-size:14px;line-height:1.5}.order-code{background:#faf7f4;padding:13px;border-radius:12px;font-weight:900;letter-spacing:2px;margin:18px 0}
+footer{text-align:center;color:#999;font-size:11px;padding:20px}
+@media(max-width:720px){main{padding:18px 14px 110px}.menu-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.food-art{height:115px;font-size:54px}.food-info{padding:11px}.food h3{font-size:14px}.food p{font-size:11px}.hero{padding:21px}.hero-stamp{font-size:45px}}
+@media(max-width:360px){.menu-grid{grid-template-columns:1fr}.food{display:grid;grid-template-columns:100px 1fr}.food-art{height:100%;min-height:125px}.food-info{padding:10px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar"><div class="brand"><div class="brand-mark">G</div><div>GACOAN<small>ORDER FROM YOUR TABLE</small></div></div><div class="table-pill" id="tableLabel">Meja 08</div></header>
+<main>
+<section class="hero"><div><h1>Laper? Pesan<br>langsung di sini.</h1><p>Pilih menu favoritmu, pesan tanpa antre.</p></div><div class="hero-stamp">🍜</div></section>
+<div class="section-head"><div><h2>Menu favorit</h2><p>Freshly made, made for you.</p></div></div>
+<input id="search" class="search" placeholder="Cari mie, dimsum, minuman..." aria-label="Cari menu">
+<nav class="categories" id="categories"></nav>
+<div class="menu-grid" id="menuGrid"></div>
+<footer>Prototype pemesanan • Bukan situs resmi atau kanal pembayaran restoran.</footer>
+</main>
+</div>
+<div class="bottom-cart"><div class="bottom-inner"><div class="cart-meta"><strong id="cartCount">0 item</strong><span id="cartTotal">Rp0</span></div><button class="primary" id="viewCart" disabled>Lihat keranjang →</button></div></div>
+
+<div class="overlay" id="overlay"><section class="sheet"><div class="sheet-head"><h2 id="sheetTitle">Keranjang kamu</h2><button class="close" id="closeSheet" aria-label="Tutup">×</button></div><div id="sheetContent"></div></section></div>
+<script>
+const menu=[
+{id:1,name:"Mie Suit",desc:"Mie gurih dengan rasa ringan dan topping pilihan.",price:10000,cat:"Mie",emoji:"🍜"},
+{id:2,name:"Mie Gacoan",desc:"Mie pedas gurih dengan taburan pangsit renyah.",price:10500,cat:"Mie",emoji:"🌶️"},
+{id:3,name:"Mie Hompimpa",desc:"Sensasi pedas dengan level yang bisa dipilih.",price:10500,cat:"Mie",emoji:"🔥"},
+{id:4,name:"Udang Rambutan",desc:"Dimsum udang renyah di luar, lembut di dalam.",price:9500,cat:"Dimsum",emoji:"🍤"},
+{id:5,name:"Lumpia Udang",desc:"Lumpia gurih dengan isian udang.",price:9500,cat:"Dimsum",emoji:"🥟"},
+{id:6,name:"Pangsit Goreng",desc:"Pangsit renyah, cocok jadi teman makan mie.",price:10000,cat:"Dimsum",emoji:"🥠"},
+{id:7,name:"Es Gobak S คือ",desc:"Minuman segar untuk menemani menu favorit.",price:8500,cat:"Minuman",emoji:"🥤"},
+{id:8,name:"Es Teklek",desc:"Minuman dingin dengan rasa manis menyegarkan.",price:6500,cat:"Minuman",emoji:"🧋"},
+{id:9,name:"Air Mineral",desc:"Air mineral dingin.",price:5000,cat:"Minuman",emoji:"💧"}
+];
+const rupiah=n=>"Rp"+n.toLocaleString("id-ID");
+let cart={},activeCat="Semua",step="cart";
+const params=new URLSearchParams(location.search);let table=params.get("meja")||"08";
+document.getElementById("tableLabel").textContent="Meja "+table;
+const categories=["Semua","Mie","Dimsum","Minuman"];
+function renderCats(){document.getElementById("categories").innerHTML=categories.map(c=>`<button class="cat ${c===activeCat?"active":""}" data-cat="${c}">${c}</button>`).join("");document.querySelectorAll(".cat").forEach(b=>b.onclick=()=>{activeCat=b.dataset.cat;renderCats();renderMenu()})}
+function renderMenu(){let q=document.getElementById("search").value.toLowerCase();let list=menu.filter(m=>(activeCat==="Semua"||m.cat===activeCat)&&(m.name.toLowerCase().includes(q)||m.desc.toLowerCase().includes(q)));document.getElementById("menuGrid").innerHTML=list.map(m=>`<article class="food"><div class="food-art">${m.emoji}</div><div class="food-info"><h3>${m.name}</h3><p>${m.desc}</p><div class="food-bottom"><span class="price">${rupiah(m.price)}</span><button class="add" onclick="add(${m.id})">+ Tambah</button></div></div></article>`).join("")||"<p>Menu tidak ditemukan.</p>"}
+function count(){return Object.values(cart).reduce((a,b)=>a+b,0)}
+function subtotal(){return menu.reduce((s,m)=>s+m.price*(cart[m.id]||0),0)}
+function updateCart(){document.getElementById("cartCount").textContent=count()+" item";document.getElementById("cartTotal").textContent=rupiah(subtotal());document.getElementById("viewCart").disabled=count()===0}
+function add(id){cart[id]=(cart[id]||0)+1;updateCart()}
+function change(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];updateCart();showCart()}
+const overlay=document.getElementById("overlay"),content=document.getElementById("sheetContent");
+function openSheet(title){document.getElementById("sheetTitle").textContent=title;overlay.classList.add("show")}
+function closeSheet(){overlay.classList.remove("show")}
+document.getElementById("closeSheet").onclick=closeSheet;overlay.addEventListener("click",e=>{if(e.target===overlay)closeSheet()});
+function showCart(){openSheet("Keranjang kamu");let rows=menu.filter(m=>cart[m.id]).map(m=>`<div class="cart-row"><div class="cart-emoji">${m.emoji}</div><div class="cart-row-info"><strong>${m.name}</strong><small>${rupiah(m.price)}</small></div><div class="qty"><button onclick="change(${m.id},-1)">−</button><b>${cart[m.id]}</b><button onclick="change(${m.id},1)">+</button></div></div>`).join("");content.innerHTML=rows+`<div class="total-line grand"><span>Total pesanan</span><strong>${rupiah(subtotal())}</strong></div><p class="note">Pastikan pesanan dan jumlah item sudah benar sebelum melanjutkan.</p><button class="primary" style="width:100%;margin-top:12px" onclick="showCheckout()">Lanjut checkout</button>`}
+function showCheckout(){document.getElementById("sheetTitle").textContent="Checkout";content.innerHTML=`<div class="checkout-items">${menu.filter(m=>cart[m.id]).map(m=>`${cart[m.id]} × ${m.name} — ${rupiah(m.price*cart[m.id])}`).join("<br>")}</div><div class="field"><label>Nomor meja</label><input id="checkoutTable" value="${table}" readonly></div><div class="field"><label>Nama pemesan (opsional)</label><input id="customerName" placeholder="Nama kamu"></div><div class="field"><label>Catatan untuk pesanan (opsional)</label><input id="customerNote" placeholder="Contoh: tidak pakai daun bawang"></div><div class="total-line"><span>Subtotal</span><b>${rupiah(subtotal())}</b></div><div class="total-line"><span>Biaya layanan</span><b>Rp0</b></div><div class="total-line grand"><span>Total pembayaran</span><strong>${rupiah(subtotal())}</strong></div><button class="primary" style="width:100%;margin-top:14px" onclick="showPayment()">Pilih pembayaran</button><p class="note">Dengan melanjutkan, kamu mengonfirmasi detail pesanan di atas.</p>`}
+function showPayment(){let name=document.getElementById("customerName").value.trim();let note=document.getElementById("customerNote").value.trim();window.orderData={name,note,table,items:{...cart},total:subtotal(),code:"GM"+Math.floor(100000+Math.random()*900000)};document.getElementById("sheetTitle").textContent="Metode pembayaran";content.innerHTML=`<p class="note">Pilih metode pembayaran untuk menyelesaikan pesanan simulasi.</p><label class="payment-option selected"><input type="radio" name="pay" checked><span><strong>QRIS (simulasi)</strong><small>Scan kode demo di bawah — tidak memproses uang sungguhan.</small></span></label><div class="qr-wrap"><strong>QRIS DEMO</strong><div class="qr-fake"></div><b>${rupiah(orderData.total)}</b><p class="note">Kode QR ini hanya ilustrasi dan tidak dapat digunakan untuk pembayaran.</p></div><div class="total-line grand"><span>Total</span><strong>${rupiah(orderData.total)}</strong></div><button class="primary" style="width:100%;margin-top:12px" onclick="confirmPayment()">Saya sudah membayar (simulasi)</button><p class="note">Tombol ini hanya mengubah status menjadi “berhasil” untuk keperluan demo.</p>`}
+function confirmPayment(){document.getElementById("sheetTitle").textContent="Pesanan berhasil";content.innerHTML=`<div class="success"><div class="success-icon">✓</div><h2>Pembayaran berhasil!</h2><p>Terima kasih${orderData.name?", "+escapeHtml(orderData.name):""}. Pesanan simulasi kamu sudah diterima.</p><div class="order-code">${orderData.code}</div><p><b>Meja ${escapeHtml(orderData.table)}</b><br>Total ${rupiah(orderData.total)}<br>Status: <span style="color:var(--green);font-weight:800">LUNAS (DEMO)</span></p><p class="note">Ini bukan transaksi sungguhan. Tidak ada pembayaran atau pesanan yang dikirim ke restoran.</p><button class="primary" style="width:100%" onclick="finish()">Kembali ke menu</button></div>`;cart={};updateCart()}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function finish(){closeSheet();renderMenu()}
+document.getElementById("viewCart").onclick=showCart;document.getElementById("search").addEventListener("input",renderMenu);
+renderCats();renderMenu();updateCart();
+</script>
+</body>
+</html>
